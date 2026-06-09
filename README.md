@@ -2,7 +2,6 @@
 
 **Part 4 of a home network lab series.** Parts 1–3 built, segmented, and domained the network. This part expands `holl.domain` into a realistic, enterprise-style directory — departmental OUs, role-based access via AGDLP, file-share permissions, delegated administration, and a tiered admin model — then **instruments it for security work** by enabling Advanced Audit Policy logging and deploying Sysmon. The result is a domain that produces clean, attacker-relevant telemetry, ready for SIEM ingestion and detection labs in Part 5.
 
-> **Scope note:** This part builds everything to a *correct, secure baseline*. Deliberate misconfigurations (Kerberoastable accounts, privilege-creep, etc.) are intentionally **deferred to Part 5**, so the secure starting state is established and understood first.
 
 ## Series
 
