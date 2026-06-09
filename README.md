@@ -37,29 +37,10 @@ Part 4 expands the single-domain lab from Part 3 into a realistic, enterprise-st
 
 ---
 
-## Target OU Structure
 
 ```
-holl.domain
-├── Domain Controllers          (built-in — DC01 stays here, never moved)
-└── OU=Lab
-    ├── OU=Departments
-    │   ├── OU=IT          → Users / Groups / Workstations
-    │   ├── OU=HR          → Users / Groups / Workstations
-    │   ├── OU=Marketing   → Users / Groups / Workstations
-    │   └── OU=Security    → Users / Groups / Workstations   (SOC/security team)
-    ├── OU=Servers
-    │   ├── OU=Tier0       (identity infra)
-    │   └── OU=Tier1       (member servers — FS01)
-    ├── OU=Admin-Accounts
-    │   ├── OU=Tier0-Admins
-    │   ├── OU=Tier1-Admins
-    │   └── OU=Tier2-Admins
-    ├── OU=Service-Accounts
-    └── OU=Staging-Disabled
-```
 
-*(Adjust depth to taste — the rule is consistency across departments.)*
+
 
 ![Final OU structure in ADUC](screenshots/phase1-ou-structure.png)
 
@@ -67,7 +48,7 @@ holl.domain
 
 ## Phase 1 — Refactor OU Structure
 
-**Status:** ✅ Complete
+
 
 **Why:** Part 3 used an object-type layout (`Lab/Users`, `Lab/Groups`, `Lab/Computers`). Enterprise designs organize by department first, with object-type sub-OUs underneath, because delegation and GPO targeting happen per department.
 
@@ -90,7 +71,7 @@ holl.domain
 
 ## Phase 2 — Departmental Users and Role Groups
 
-**Status:** ✅ Complete
+
 
 **Why:** Users are the accounts; **global security groups** bundle them by role so policy and access attach to a role, not an individual.
 
@@ -111,7 +92,7 @@ holl.domain
 
 ## Phase 3 — AGDLP Group Model
 
-**Status:** ✅ Complete
+
 
 **Why:** Best-practice access control: **A**ccounts go into **G**lobal role groups, which nest into **D**omain **L**ocal resource groups, which receive the **P**ermission. This decouples "who someone is" from "what a resource grants."
 
@@ -129,7 +110,7 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ## Phase 4 — File Server and Share/NTFS Permissions
 
-**Status:** ✅ Complete *(HR share built & verified — Marketing / IT / Security shares to be added later)*
+ *(HR share built & verified — Marketing / IT / Security shares to be added later)*
 
 **Why:** Permissions need a resource to attach to. A dedicated member file server (**FS01**) is the enterprise-correct choice — user shares should *not* live on a domain controller. It also gives the `Servers/Tier1` OU a real occupant.
 
@@ -154,7 +135,7 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ## Phase 5 — Delegated Administration
 
-**Status:** ✅ Complete *(HR worked example; delegate at the Departments level later to cover all departments)*
+ *(HR worked example; delegate at the Departments level later to cover all departments)*
 
 **Why:** Delegation lets a Helpdesk team perform scoped tasks (password resets) on specific OUs without being domain admins — least privilege, and a core T1/T2 helpdesk function.
 
@@ -182,7 +163,7 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ## Phase 6 — Tiered Admin, Servers, and Service Account OUs
 
-**Status:** ✅ Complete *(OUs built in Phase 1; dedicated admin account added)*
+ *(OUs built in Phase 1; dedicated admin account added)*
 
 **Why:** Separating privileged accounts by tier (Tier 0 = identity/DCs, Tier 1 = servers, Tier 2 = workstations) is a foundational AD security control — it limits how far a single compromise can reach. Service accounts get their own OU so restrictive policy can be applied without touching real users.
 
@@ -201,7 +182,7 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ## Phase 7 — Advanced Audit Policy GPO (Security Keystone)
 
-**Status:** ✅ Complete
+
 
 **Why:** This is what turns the domain into a *detectable* environment. Without it, attacks generate little or no usable telemetry and Part 5's SIEM has nothing to alert on.
 
@@ -238,7 +219,7 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ## Phase 8 — Sysmon Deployment via GPO
 
-**Status:** ✅ Complete
+e
 
 **Why:** Native Windows auditing is the baseline; Sysmon adds the richer process, network, and image-load events that make detection engineering practical.
 
@@ -265,17 +246,17 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ## Phase 9 — Verification
 
-**Status:** ✅ Complete
+
 
 | Test | Check | Result |
 | ---- | ----- | ------ |
-| Share isolation | `ahernandez` (HR) opens `\\FS01\HR`; `jdoe` (IT) attempts it | ✅ HR opened + wrote a file; IT denied |
-| Delegation works | `hdesk1` (Helpdesk) resets an HR user's password | ✅ Succeeded |
-| Delegation membership-gated | `jdoe` (not in Helpdesk) attempts a reset | ✅ Denied |
-| Delegation OU-scoped | `hdesk1` attempts to reset a Marketing user (`bjones`, outside HR) | ✅ Denied |
-| Audit logging live | Event Viewer → Security after test logon/process | ✅ 4624 / 4625 / 4688 (with command line) present |
-| Sysmon live | Sysmon/Operational on CLIENT01 and FS01 | ✅ Events flowing on both |
-| GPO applied | `auditpol` / `gpresult` / `sc query Sysmon64` | ✅ Audit Baseline effective; Sysmon auto-installed |
+| Share isolation | `ahernandez` (HR) opens `\\FS01\HR`; `jdoe` (IT) attempts it |  HR opened + wrote a file; IT denied |
+| Delegation works | `hdesk1` (Helpdesk) resets an HR user's password |  Succeeded |
+| Delegation membership-gated | `jdoe` (not in Helpdesk) attempts a reset |  Denied |
+| Delegation OU-scoped | `hdesk1` attempts to reset a Marketing user (`bjones`, outside HR) |  Denied |
+| Audit logging live | Event Viewer → Security after test logon/process |  4624 / 4625 / 4688 (with command line) present |
+| Sysmon live | Sysmon/Operational on CLIENT01 and FS01 |  Events flowing on both |
+| GPO applied | `auditpol` / `gpresult` / `sc query Sysmon64` |  Audit Baseline effective; Sysmon auto-installed |
 
 *Delegation scope — hdesk1 (Helpdesk) denied resetting a Marketing user, since the delegation was granted only on the HR OU:*
 
