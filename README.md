@@ -34,10 +34,6 @@ Part 4 expands the single-domain lab from Part 3 into a realistic, enterprise-st
 
 **Skills demonstrated:** enterprise OU design, AGDLP role-based access control, NTFS/share permissions, delegation of control, tiered administration model, Group Policy, Advanced Audit Policy configuration, Sysmon deployment, and security telemetry preparation.
 
----
-
-
-```
 
 
 
