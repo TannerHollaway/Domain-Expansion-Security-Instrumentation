@@ -173,6 +173,8 @@ The resulting chain: `ahernandez` → member of `HR-Staff` (Global) → member o
 
 ![jdoe-adm in AdministrationAccounts, member of Domain Admins](screenshots/phase6-admin-account.png)
 
+I mistakenly placed AdministrativeAccounts under the Departments OU, which I fixed later.
+
 ---
 
 ## Phase 7 — Advanced Audit Policy GPO (Security Keystone)
