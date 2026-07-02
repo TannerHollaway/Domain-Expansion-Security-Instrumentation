@@ -5,11 +5,11 @@
 
 ## Series
 
-- [Part 1 — OPNsense Firewall/Router Deployment](https://github.com/TannerHollaway/ReplacingHomeRouterWithOPNsense)
-- [Part 2 — VLAN Segmentation and Multi-SSID Wireless Setup](https://github.com/TannerHollaway/VLAN-Segmentation-and-Multi-SSID-Wireless-Setup)
-- [Part 3 — Windows Server 2022 Active Directory Domain](https://github.com/TannerHollaway/Windows-Server-2022-Active-Directory-Domain)
+- Part 1 — [OPNsense Firewall/Router Deployment](https://github.com/TannerHollaway/ReplacingHomeRouterWithOPNsense)
+- Part 2 — [VLAN Segmentation and Multi-SSID Wireless Setup](https://github.com/TannerHollaway/VLAN-Segmentation-and-Multi-SSID-Wireless-Setup)
+- Part 3 — [Windows Server 2022 Active Directory Domain](https://github.com/TannerHollaway/Windows-Server-2022-Active-Directory-Domain)
 - **Part 4 — Domain Expansion & Security Instrumentation** ← this repo
-
+- part 5 — [Splunk SIEM, Logging & Attack Simulation](https://github.com/TannerHollaway/Settinup-Up-Splunk-and-Simulating-attacks)
 ---
 
 ## Build Progress
