@@ -301,4 +301,4 @@ Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.
 
 ## Next Steps
 
-**Part 5 (planned):** introduce a vulnerable/domain-joined host, forward Security + Sysmon logs to a SIEM (Splunk), and build detections. Deliberate misconfigurations (Kerberoastable SPN account, privilege-creep, etc.) will be planted there as detection targets — *intentionally held back from Part 4 so the secure baseline is established first.*
+ part 5 — [Splunk SIEM, Logging & Attack Simulation](https://github.com/TannerHollaway/Settinup-Up-Splunk-and-Simulating-attacks)
